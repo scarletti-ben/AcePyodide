@@ -29,7 +29,7 @@ import segno
 import mimetypes
 
 filename = "qr.png"
-qr_data = segno.make_qr("Hello, World")
+qr_data = segno.make_qr(text)
 qr_data.save(filename, scale = 5)
 
 def download(filename: str, data: any, revoke_delay: int = 1000) -> None:
@@ -111,6 +111,17 @@ async function evaluatePythonAsync(code) {
     catch (error) {
         processError(error);
     }
+}
+
+// Copy text to clipboard and log to terminal
+function copyToClipboard(text, message_success, message_error) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            addLine(message_success);
+        })
+        .catch(err => {
+            addLine(message_error);
+        });
 }
 
 // Function to evaluate python code from the editor
@@ -287,31 +298,35 @@ async function main() {
     hijackPrint(pyodide);
 
     userID = getUserID();
+    userID = null;
     console.log(userID);
     if (!userID) {
         console.log(userID);
         userID = prompt("Enter ID number, leave empty to generate new ID:");
     }
 
-    if (!userID){
+    if (!userID) {
         let dateString = getDateString();
         let data = {
             "micropip": {
                 "snippets": {
-                [dateString]: defaultText
+                    [dateString]: defaultText
                 }
             }
         }
         userID = await createStorage(data);
         addLine(`New User Created: ${userID}`);
+        // let message_success = `User ID: ${userID} copied to clipboard`;
+        // let message_error = `User ID cannot be copied to clipboard due to user preferences`;
+        // copyToClipboard(userID, message_success, message_error);
     }
     else {
         addLine(`Existing User Login: ${userID}`);
 
     }
 
-    if (!getUserID()){
-        setUserID(userID);
+    if (!getUserID()) {
+        // setUserID(userID);
         addLine(`User ID Saved: ${userID}`);
     }
 
