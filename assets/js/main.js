@@ -2,16 +2,68 @@
 // Constants, Variables, and Global Declarations
 // =======================================================
 
-let userID = "1336348896317857792";
+let userID;
 let packageNames = ["requests"];
 let page = document.getElementById("page");
 let toolbarTop = document.getElementById("toolbar-top");
 let mainButton = document.querySelector("#toolbar-bottom .icon");
-const defaultText = ``;
+const defaultText = `
+
+# -----------------------------------------
+# Information
+# - You can edit the text below
+# - Make sure it starts and ends with "
+# - Works with text or could be a URL
+#     - eg. text = "www.google.com"
+# - Click ^ button in the bottom right
+#     - Use button above it to 'run' code
+
+text = "Hello, World"
+
+# -----------------------------------------
+
+import js
+import micropip
+await micropip.install("https://files.pythonhosted.org/packages/27/7c/abc460494640767edfce9c920da3e03df22327fc5e3d51c7857f50fd89c4/segno-1.6.1-py3-none-any.whl")
+import segno
+import mimetypes
+
+filename = "qr.png"
+qr_data = segno.make_qr("Hello, World")
+qr_data.save(filename, scale = 5)
+
+def download(filename: str, data: any, revoke_delay: int = 1000) -> None:
+    """Initiate user download for a given filename and data object"""
+    fallback: str = "application/octet-stream"
+    mimetype: str = mimetypes.guess_type(filename)[0] or fallback
+    blob = js.Blob.new([data], {"type": mimetype})
+    uri = js.window.URL.createObjectURL(blob)
+    link = js.document.createElement("a")
+    link.href = uri
+    link.download = filename
+    link.click()
+    revoke_function = lambda: js.window.URL.revokeObjectURL(uri)
+    js.setTimeout(revoke_function, revoke_delay)
+
+binary_data = open(filename, "rb").read()
+js_binary = js.Uint8Array.new(binary_data)
+download(filename, js_binary)
+
+`;
 
 // ! ======================================================
 // ! Testing
 // ! ======================================================
+
+// Saves a given userID to localStorage
+function setUserID(userID) {
+    localStorage.setItem("userID", userID);
+}
+
+// Loads userID from localStorage and returns
+function getUserID() {
+    return localStorage.getItem("userID");
+}
 
 // Function to add a line to the terminal
 function addLine(line, newlines = 0, end = "\n") {
@@ -138,6 +190,11 @@ document.getElementById("file-next").addEventListener("click", () => {
     addLine("loaded snippet from cloud");
 });
 
+document.getElementById("file-previous").addEventListener("click", () => {
+    loadSnippet(editor);
+    addLine("loaded snippet from cloud");
+});
+
 document.getElementById("editor-settings").addEventListener("click", () => {
     editor.execCommand("showSettingsMenu");
 });
@@ -177,7 +234,7 @@ document.addEventListener('keydown', function (event) {
     if (event.code === 'Numpad1') {
         event.preventDefault();
         document.getElementById("clear-terminal").click();
-    } 
+    }
     else if (event.code === 'Numpad2') {
         event.preventDefault();
         document.getElementById("run-code").click();
@@ -224,58 +281,34 @@ document.getElementById("cloud-upload").addEventListener("click", () => {
 
 // Ensures Pyodide and Ace have initialised before running
 async function main() {
+
     await aceInit();
     await pyodideInit(packageNames);
     hijackPrint(pyodide);
+
+    userID = getUserID();
+    if (!userID) {
+        let dateString = getDateString();
+        let data = {
+            "micropip": {
+              "snippets": {
+                [dateString]: defaultText
+              }
+            }
+        }
+        userID = await createStorage(data);
+        setUserID(userID);
+        addLine(`New User Created: ${userID} => stored to localcache`);
+    }
+    else {
+        addLine(`Existing User Login: ${userID}`);
+    }
+
     await storageInit(userID);
 
-    // document.getElementById("file-next").click();
+    document.getElementById("file-next").click();
 
-    let text = `
-
-# -----------------------------------------
-# Information
-# - You can edit the text below
-# - Make sure it starts and ends with "
-# - Works with text or could be a URL
-#     - eg. text = "www.google.com"
-# - Click ^ button in the bottom right
-#     - Use button above it to 'run' code
-
-text = "Hello, World"
-
-# -----------------------------------------
-
-import js
-import micropip
-await micropip.install("https://files.pythonhosted.org/packages/27/7c/abc460494640767edfce9c920da3e03df22327fc5e3d51c7857f50fd89c4/segno-1.6.1-py3-none-any.whl")
-import segno
-import mimetypes
-
-filename = "qr.png"
-qr_data = segno.make_qr("Hello, World")
-qr_data.save(filename, scale = 5)
-
-def download(filename: str, data: any, revoke_delay: int = 1000) -> None:
-    """Initiate user download for a given filename and data object"""
-    fallback: str = "application/octet-stream"
-    mimetype: str = mimetypes.guess_type(filename)[0] or fallback
-    blob = js.Blob.new([data], {"type": mimetype})
-    uri = js.window.URL.createObjectURL(blob)
-    link = js.document.createElement("a")
-    link.href = uri
-    link.download = filename
-    link.click()
-    revoke_function = lambda: js.window.URL.revokeObjectURL(uri)
-    js.setTimeout(revoke_function, revoke_delay)
-
-binary_data = open(filename, "rb").read()
-js_binary = js.Uint8Array.new(binary_data)
-download(filename, js_binary)
-
-`
-
-    editor.setValue(text.trim());
+    // editor.setValue(text.trim());
     editor.clearSelection();
 
 }

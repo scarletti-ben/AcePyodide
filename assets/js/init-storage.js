@@ -25,6 +25,20 @@ async function readFile(userID) {
     }
 }
 
+// Create storage, used when no userID exists
+async function createStorage(data) {
+    const response = await fetch('https://jsonblob.com/api/jsonBlob', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+    });
+    if (response.status === 201) {
+        const location = response.headers.get('Location');
+        const userID = location.split('/').pop();
+        return userID;
+    }
+}
+
 // Update the full JSON storage file with new data
 async function updateStorage(userID, userData) {
     let url = userURL(userID);
