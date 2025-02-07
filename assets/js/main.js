@@ -187,12 +187,12 @@ document.getElementById("run-code").addEventListener("click", evaluateEditorAsyn
 
 document.getElementById("file-next").addEventListener("click", () => {
     loadSnippet(editor);
-    addLine("loaded snippet from cloud");
+    addLine("loaded most recent snippet from cloud");
 });
 
 document.getElementById("file-previous").addEventListener("click", () => {
     loadSnippet(editor);
-    addLine("loaded snippet from cloud");
+    addLine("loaded most recent snippet from cloud");
 });
 
 document.getElementById("editor-settings").addEventListener("click", () => {
@@ -287,21 +287,32 @@ async function main() {
     hijackPrint(pyodide);
 
     userID = getUserID();
+    console.log(userID);
     if (!userID) {
+        console.log(userID);
+        userID = prompt("Enter ID number, leave empty to generate new ID:");
+    }
+
+    if (!userID){
         let dateString = getDateString();
         let data = {
             "micropip": {
-              "snippets": {
+                "snippets": {
                 [dateString]: defaultText
-              }
+                }
             }
         }
         userID = await createStorage(data);
-        setUserID(userID);
-        addLine(`New User Created: ${userID} => stored to localcache`);
+        addLine(`New User Created: ${userID}`);
     }
     else {
         addLine(`Existing User Login: ${userID}`);
+
+    }
+
+    if (!getUserID()){
+        setUserID(userID);
+        addLine(`User ID Saved: ${userID}`);
     }
 
     await storageInit(userID);
