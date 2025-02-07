@@ -228,7 +228,43 @@ async function main() {
     await pyodideInit(packageNames);
     hijackPrint(pyodide);
     await storageInit(userID);
-    document.getElementById("file-next").click();
+
+    // document.getElementById("file-next").click();
+
+    let text = `
+
+import js
+import micropip
+await micropip.install("https://files.pythonhosted.org/packages/27/7c/abc460494640767edfce9c920da3e03df22327fc5e3d51c7857f50fd89c4/segno-1.6.1-py3-none-any.whl")
+import segno
+import mimetypes
+
+filename = "qr.png"
+text = "Hello, World"
+qr_data = segno.make_qr("Hello, World")
+qr_data.save(filename, scale = 5)
+
+def download(filename: str, data: any, revoke_delay: int = 1000) -> None:
+    """Initiate user download for a given filename and data object"""
+    fallback: str = "application/octet-stream"
+    mimetype: str = mimetypes.guess_type(filename)[0] or fallback
+    blob = js.Blob.new([data], {"type": mimetype})
+    uri = js.window.URL.createObjectURL(blob)
+    link = js.document.createElement("a")
+    link.href = uri
+    link.download = filename
+    link.click()
+    revoke_function = lambda: js.window.URL.revokeObjectURL(uri)
+    js.setTimeout(revoke_function, revoke_delay)
+
+binary_data = open(filename, "rb").read()
+js_binary = js.Uint8Array.new(binary_data)
+download(filename, js_binary)
+
+`
+
+    editor.setValue(text.trim());
+
 }
 
 // =======================================================
