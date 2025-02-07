@@ -172,6 +172,7 @@ html, body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  user-select: none;
   touch-action: manipulation;
   box-shadow: inset 0 0 0 var(--debug-outline) teal;
   background-color: rgba(0, 50, 70, 1);

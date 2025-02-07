@@ -141,6 +141,7 @@ for (const button of layoutButtons) {
         terminal.style.display = "flex";
         document.getElementById("editor").style.display = "flex";
         page.className = button.id;
+        setTimeout(() => editor.resize(), 0);
     });
 }
 
@@ -150,6 +151,7 @@ function toggleFullscreen() {
     } else {
         document.exitFullscreen();
     }
+    setTimeout(() => editor.resize(), 0);
 }
 
 function getDateString() {
@@ -172,11 +174,13 @@ function toggleToolbar() {
 function editorOnly() {
     terminal.style.display = "none";
     document.getElementById("editor").style.display = "flex";
+    setTimeout(() => editor.resize(), 0);
 }
 
 function terminalOnly() {
     document.getElementById("editor").style.display = "none";
     terminal.style.display = "flex";
+    setTimeout(() => editor.resize(), 0);
 }
 
 mainButton.addEventListener("click", toggleToolbar);
@@ -298,7 +302,7 @@ async function main() {
     hijackPrint(pyodide);
 
     userID = getUserID();
-    userID = null;
+    // userID = null;
     console.log(userID);
     if (!userID) {
         console.log(userID);
@@ -326,7 +330,7 @@ async function main() {
     }
 
     if (!getUserID()) {
-        // setUserID(userID);
+        setUserID(userID);
         addLine(`User ID Saved: ${userID}`);
     }
 
