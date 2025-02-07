@@ -202,12 +202,12 @@ document.getElementById("run-code").addEventListener("click", evaluateEditorAsyn
 
 document.getElementById("file-next").addEventListener("click", () => {
     loadSnippet(editor);
-    addLine("loaded most recent snippet from cloud");
+    addLine("Loaded most recent snippet from cloud");
 });
 
 document.getElementById("file-previous").addEventListener("click", () => {
     loadSnippet(editor);
-    addLine("loaded most recent snippet from cloud");
+    addLine("Loaded most recent snippet from cloud");
 });
 
 document.getElementById("editor-settings").addEventListener("click", () => {
@@ -215,24 +215,24 @@ document.getElementById("editor-settings").addEventListener("click", () => {
 });
 
 document.getElementById("cloud-open").addEventListener("click", () => {
-    addLine("opening raw JSON in new tab");
+    addLine("Opening raw JSON in new tab");
     openRaw(userID);
 });
 
 document.getElementById("cloud-delete").addEventListener("click", () => {
     deleteLocalSnippet();
     updateStorage(userID, userData);
-    addLine("deleted most recent cloud snippet");
+    addLine("Deleted most recent cloud snippet");
 });
 
 document.getElementById("local-download").addEventListener("click", () => {
-    addLine("saving to local file");
+    addLine("Saving to local file");
     let filename = "test.py";
     saveToFile(filename, editor);
 });
 
 document.getElementById("local-upload").addEventListener("click", () => {
-    addLine("loading from local file");
+    addLine("Loading from local file");
     loadFromFile(editor);
 });
 
@@ -286,9 +286,113 @@ document.getElementById("cloud-upload").addEventListener("click", () => {
     let dateString = getDateString();
     addLocalSnippet(dateString, editor.getValue());
     updateStorage(userID, userData);
-    addLine(`added cloud snippet with date ${dateString}`);
+    addLine(`Added cloud snippet with date ${dateString}`);
 
 });
+
+document.getElementById("open-filesystem").addEventListener("click", () => {
+    let container = document.querySelector("#file-window-container");
+    container.classList.remove("hidden");
+    toggleToolbar();
+    MADNESS();
+});
+
+document.getElementById("close-filesystem").addEventListener("click", () => {
+    let container = document.querySelector("#file-window-container");
+    container.classList.add("hidden");
+});
+
+function MADNESS() {
+
+    let files = snippets;
+
+    // Populate #file-window with files from data.micropip.snippets
+    function populateFileWindow(files) {
+
+        let fileWindow = document.querySelector("#file-window");
+        fileWindow.innerHTML = '';
+
+        // Save editor contents to a file with a given filename
+        function save(filename, content) {
+            const blob = new Blob([content], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        async function deleteSnippet(key) {
+            delete snippets[key];
+            await updateStorage(userID, userData);
+            populateFileWindow(snippets);
+        }
+
+        for (const [key, value] of Object.entries(files)) {
+            const container = document.createElement("div");
+            container.classList.add("file-container");
+
+            const header = document.createElement("h3");
+            header.classList.add("file-header");
+            const contents = document.createElement("pre");
+            contents.classList.add("file-content");
+
+
+            const row = document.createElement('div');
+            row.classList.add("icon-row");
+
+            let icons = {
+                'delete': 'Delete',
+                'edit': 'Edit',
+                'download': 'Download',
+            }
+
+
+            for (const [identifier, name] of Object.entries(icons)) {
+                const icon = document.createElement('span');
+                const symbol = document.createElement('span');
+                icon.classList.add('icon');
+                icon.style.setProperty("background-color", "transparent", "important");
+                symbol.classList.add('material-symbols-outlined');
+                symbol.textContent = identifier;
+                icon.title = name;
+
+                if (identifier === "delete") {
+                    icon.addEventListener("click", () => {
+                        deleteSnippet(key);
+                    })
+                }
+                else if (identifier === "edit") {
+                    icon.addEventListener("click", () => {
+                        editor.setValue(value);
+                        editor.clearSelection();
+                        let container = document.querySelector("#file-window-container");
+                        container.classList.add("hidden");
+                    })
+                }
+                else if (identifier === "download") {
+                    icon.addEventListener("click", () => {
+                        save(key + ".py", value);
+                    })
+                }
+
+                icon.appendChild(symbol);
+                row.appendChild(icon);
+            }
+
+            header.textContent = key + ".py";
+            contents.textContent = value;
+            container.appendChild(header);
+            container.appendChild(contents);
+            container.appendChild(row);
+            fileWindow.appendChild(container);
+        }
+
+    }
+
+    populateFileWindow(files);
+
+}
 
 // =======================================================
 // Functionality
@@ -348,3 +452,5 @@ async function main() {
 // =======================================================
 
 main();
+
+// MADNESS();

@@ -38,3 +38,9 @@ This is a combination of a few of my projects, involving `pyodide`, `ace editor`
 ### Other Dependencies
 - Google Material Icons
   - https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200
+
+#### TODO
+- Disable zoom / scroll on mobile devices
+- Add margin space at the bottom of editor so it doesn't scroll off screen directly at bottom
+- Sort editor gutter size
+- Editor margin on right

@@ -26,8 +26,19 @@
 
   <!-- ! Main HTML -->
   <div id="page" class="layout-top">
+
     <pre id="editor"></pre>
     <pre id="terminal" disabled></pre>
+
+    <div id="file-window-container" class="hidden">
+      <div id="file-window"></div>
+      <div class="close-container">
+        <span class="icon" id="close-filesystem" title="Close File Explorer" style="background-color: transparent !important;">
+          <span class="material-symbols-outlined">close</span>
+        </span>
+      </div>
+    </div>
+
   </div>
 
   <!-- ! Toolbar HTML -->
@@ -88,6 +99,9 @@
       <div class="toolbar-row">
         <span class="icon" id="cloud-upload" title="Upload to Cloud">
           <span class="material-symbols-outlined">backup</span>
+        </span>
+        <span class="icon" id="open-filesystem" title="Open Filesystem">
+          <span class="material-symbols-outlined">folder</span>
         </span>
         <span class="icon" id="local-download" title="Download this File">
           <span class="material-symbols-outlined">save_as</span>
