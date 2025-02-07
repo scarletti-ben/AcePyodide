@@ -233,6 +233,19 @@ async function main() {
 
     let text = `
 
+# -----------------------------------------------------
+# Information
+#   - You can edit the text below to anything you want
+#   - Make sure it still starts and ends with "
+#   - It works with text or could be a URL
+#       - eg. text = "www.google.com"
+#   - Click the ^ button in the bottom right
+#       - Use the button above it to 'run' the code
+
+text = "Hello, World"
+
+# -----------------------------------------------------
+
 import js
 import micropip
 await micropip.install("https://files.pythonhosted.org/packages/27/7c/abc460494640767edfce9c920da3e03df22327fc5e3d51c7857f50fd89c4/segno-1.6.1-py3-none-any.whl")
@@ -240,7 +253,6 @@ import segno
 import mimetypes
 
 filename = "qr.png"
-text = "Hello, World"
 qr_data = segno.make_qr("Hello, World")
 qr_data.save(filename, scale = 5)
 
