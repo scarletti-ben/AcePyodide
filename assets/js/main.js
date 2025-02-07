@@ -276,6 +276,7 @@ download(filename, js_binary)
 `
 
     editor.setValue(text.trim());
+    editor.clearSelection();
 
 }
 
