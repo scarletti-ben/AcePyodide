@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AcePyodide</title>
+
+  <!-- ! Imports -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ext-language_tools.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js"></script>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- ! CSS -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- ! Icon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+<body>
+
+  <!-- ! Main HTML -->
+  <div id="page">
+    <pre id="editor"></pre>
+    <pre id="terminal" disabled></pre>
+  </div>
+
+  <!-- ! Toolbar HTML -->
+  <div id="toolbar-container">
+
+    <div id="toolbar-bottom">
+
+      <span class="icon">
+        <span class="material-symbols-outlined">keyboard_arrow_up</span>
+      </span>
+
+    </div>
+
+    <div id="toolbar-top" class="hidden">
+
+      <div class="toolbar-row">
+        <span class="icon" id="run-code" title="Run Code">
+          <span class="material-symbols-outlined">terminal</span>
+        </span>
+        <span class="icon" id="clear-editor" title="Clear Editor">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cancel_presentation</span>
+        </span>
+        <span class="icon" id="clear-terminal" title="Clear Terminal">
+          <span class="material-symbols-outlined">cancel_presentation</span>
+        </span>
+        <span class="icon" id="file-next" title="Next Snippet">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </span>
+        <span class="icon" id="file-previous" title="Previous Snippet">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </span>
+      </div>
+
+      <div class="toolbar-row">
+        <span class="icon" id="toggle-fullscreen" title="Toggle Fullscreen">
+          <span class="material-symbols-outlined">fullscreen</span>
+        </span>
+        <span class="icon" id="layout-right" title="Editor Right">
+          <span class="material-symbols-outlined">splitscreen_right</span>
+        </span>
+        <span class="icon" id="layout-left" title="Editor Left">
+          <span class="material-symbols-outlined">splitscreen_left</span>
+        </span>
+        <span class="icon" id="layout-bottom" title="Editor Bottom">
+          <span class="material-symbols-outlined">splitscreen_bottom</span>
+        </span>
+        <span class="icon" id="layout-top" title="Editor Top">
+          <span class="material-symbols-outlined">splitscreen_top</span>
+        </span>
+        <span class="icon" id="only-editor" title="Editor Only">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">crop_square</span>
+        </span>
+        <span class="icon" id="only-terminal" title="Terminal Only">
+          <span class="material-symbols-outlined">crop_square</span>
+        </span>
+      </div>
+
+      <div class="toolbar-row">
+        <span class="icon" id="cloud-upload" title="Upload to Cloud">
+          <span class="material-symbols-outlined">backup</span>
+        </span>
+        <span class="icon" id="local-download" title="Download this File">
+          <span class="material-symbols-outlined">save_as</span>
+        </span>
+        <span class="icon" id="local-upload" title="Load a File">
+          <span class="material-symbols-outlined">file_open</span>
+        </span>
+        <span class="icon" id="cloud-delete" title="Delete Recent Cloud Snippet">
+          <span class="material-symbols-outlined">delete</span>
+        </span>
+        <span class="icon" id="cloud-open" title="Open Cloud Storage">
+          <span class="material-symbols-outlined">link</span>
+        </span>
+      </div>
+
+      <div class="toolbar-row">
+        <span class="icon" id="editor-settings" title="Editor Settings">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ! JavaScript -->
+  <script src="assets/js/init-pyodide.js" defer></script>
+  <script src="assets/js/init-ace.js" defer></script>
+  <script src="assets/js/init-storage.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+
+</body>
+
+</html>
