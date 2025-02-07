@@ -13,5 +13,19 @@ This is a combination of a few of my projects, involving `pyodide`, `ace editor`
 - This version does not have any functionality for changing user, but you can always do so by changing the line `let userID = "1336348896317857792";` to another number in `assets/js/main.js`
   - It would be best to ensure you read up on the `API` over at [JSONBlob](https://jsonblob.com/) and create an ID via an initial `POST` request
 
+
+## Dependencies
+
 ### API Dependencies
 - The system for saving and loading snippets to the cloud relies on the `API` from [JSONBlob](https://jsonblob.com/)
+
+### CDN Dependencies
+- Ace Editor
+  - https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js
+  - https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ext-language_tools.js
+- Pyodide
+  - https://cdn.jsdelivr.net/pyodide/v0.27.2/full/pyodide.js
+
+### Other Dependencies
+- Google Material Icons
+  - https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200
