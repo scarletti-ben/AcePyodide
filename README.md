@@ -1,11 +1,21 @@
 # AcePyodide
 
 ## Overview
-This is a combination of a few of my projects, involving `pyodide`, `ace editor` and a personal project to create an expandable toolbar.
+This is a combination of a few of my projects, involving `pyodide`, `ace editor` and a personal project to create an expandable toolbar
+
+### Features
+- An embedded `Ace` text editor with `syntax highlighting` for `Python`, information about `Ace` can be found [here](https://ace.c9.io/)
+- Uses a version of `Python` that is packaged for the web, called `Pyodide`, it runs entirely in your browser and does not rely on an external server
+- A simple "terminal" window for output
+- A "toolbar" that has a button floating in the bottom right, to give easy access to app functionality on desktop and mobile
+  - Uses `Google Material Icons`
+- A custom system of "serverless" data storage that doesn't require an `API Key` and could be used across multiple devices, utilising requests to and from [JSONBlob](https://jsonblob.com/), passing `JSON` data
 
 ### Information
 - Very little effort, if any, has been put into error catching in `JavaScript`
   - I am aware this will be my downfall, but as a demo project it makes it easier for me to read the code
+- `Pyodide` has its "quirks", and the current setup is running your code in an `asynchronous` environment so as to allow for dynamic imports via `URL`, this means you can get some very curious `tracebacks` that you wouldn't see in `synchronous` code, often pertaining to `coroutines`
+  - It can often be better to reload the page between runs to clear global variables, and avoid a few of the "quirks"
 
 # Disclaimer
 - Any files saved via the cloud save function are publically accessible, do not save any sensitive data, one example of this would be hard-coded `API` keys
