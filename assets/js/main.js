@@ -3,7 +3,7 @@
 // =======================================================
 
 let userID = "1336348896317857792";
-let packageNames = ["requests", "pillow", "numpy"];
+let packageNames = ["requests"];
 let page = document.getElementById("page");
 let toolbarTop = document.getElementById("toolbar-top");
 let mainButton = document.querySelector("#toolbar-bottom .icon");
@@ -233,18 +233,18 @@ async function main() {
 
     let text = `
 
-# -----------------------------------------------------
+# -----------------------------------------
 # Information
-#   - You can edit the text below to anything you want
-#   - Make sure it still starts and ends with "
-#   - It works with text or could be a URL
-#       - eg. text = "www.google.com"
-#   - Click the ^ button in the bottom right
-#       - Use the button above it to 'run' the code
+# - You can edit the text below
+# - Make sure it starts and ends with "
+# - Works with text or could be a URL
+#     - eg. text = "www.google.com"
+# - Click ^ button in the bottom right
+#     - Use button above it to 'run' code
 
 text = "Hello, World"
 
-# -----------------------------------------------------
+# -----------------------------------------
 
 import js
 import micropip
