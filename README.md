@@ -8,8 +8,14 @@ This is a combination of a few of my projects, involving `pyodide`, `ace editor`
 - Uses a version of `Python` that is packaged for the web, called `Pyodide`, it runs entirely in your browser and does not rely on an external server, information can be found [here](https://pyodide.org/en/stable/)
 - A simple "terminal" window for output
 - A "toolbar" that has a button floating in the bottom right, to give easy access to app functionality on desktop and mobile
-  - Uses `Google Material Icons`
+  - Uses recognisable `Google Material Icons`
+- Layout switching functionality to make it easier to edit and run code
 - A custom system of "serverless" data storage that doesn't require an `API Key` and could be used across multiple devices, utilising requests to and from [JSONBlob](https://jsonblob.com/), passing `JSON` data
+  - `userID` generated for new users, returning users are remembered
+    - Reuse `userID` across multiple devices for shared storage
+  - Save files, edit files, edit file names, delete files
+  - Download files to PC, upload from PC
+- Easy access to core editor buttons, undo, redo, copy, paste
 
 ### Information
 - Very little effort, if any, has been put into error catching in `JavaScript`
@@ -48,6 +54,7 @@ This is a combination of a few of my projects, involving `pyodide`, `ace editor`
 - fix editor margin on right
 - fix editor margin space at the bottom so scroll happens above bottom
 - shift date and name around so all snippets have date, and at first name: is same, but can be edited so you don't need a key change, only a value change
+- fix editor resize issue where a horizontal scrollbar is shown on page load if loading into layout-left
 
 # Closed
 ~~- Disable zoom / scroll on mobile devices~~
@@ -57,14 +64,16 @@ This is a combination of a few of my projects, involving `pyodide`, `ace editor`
 ~~- mention 30 day rule for jsonblob~~
 ~~    - make sure create new user runs if userID invalid~~
 ~~- add autosave snippet~~
-  - **dangerous** 
+  - **dangerous for API keys** 
 ~~- add undo and redo buttons~~
 ~~- add copy and paste buttons~~
 ~~- remove the old left right buttons~~
 ~~- switch user~~
 ~~- trim value passed on file edit~~
-
-# Open
 ~~- rename snippets~~
 ~~- css for snippets popup thing~~
 ~~- css for the settings menu for ace ~~
+~~Flip chevron~~
+
+# Open
+animation for chevron flip
