@@ -22,6 +22,7 @@ This is a combination of a few of my projects, involving `pyodide`, `ace editor`
 - When loading the site for the first time it will ask you for a `userID`, if you do not have one from a previous session you ask it to create one for you
   - It can be useful to save this `userID` in case you switch devices and want to have shared data between them
 - There are no passwords, saved data is uploaded in `JSON` format to a `URL` that looks like this `https://jsonblob.com/{ID}`
+- Files on `JSONBlob` are deleted if they haven't been accessed in the last 30 days, so this storage isn't safe, remember to download any files that matter to your device!
 
 ## Dependencies
 
@@ -40,7 +41,30 @@ This is a combination of a few of my projects, involving `pyodide`, `ace editor`
   - https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200
 
 #### TODO
-- Disable zoom / scroll on mobile devices
-- Add margin space at the bottom of editor so it doesn't scroll off screen directly at bottom
-- Sort editor gutter size
-- Editor margin on right
+
+# Hard
+- fix enter to autocomplete
+- fix editor gutter size
+- fix editor margin on right
+- fix editor margin space at the bottom so scroll happens above bottom
+- shift date and name around so all snippets have date, and at first name: is same, but can be edited so you don't need a key change, only a value change
+
+# Closed
+~~- Disable zoom / scroll on mobile devices~~
+~~- mobile width for file system more~~
+    ~~- close button may need to be top~~
+~~- issue the blur~~
+~~- mention 30 day rule for jsonblob~~
+~~    - make sure create new user runs if userID invalid~~
+~~- add autosave snippet~~
+  - **dangerous** 
+~~- add undo and redo buttons~~
+~~- add copy and paste buttons~~
+~~- remove the old left right buttons~~
+~~- switch user~~
+~~- trim value passed on file edit~~
+
+# Open
+~~- rename snippets~~
+~~- css for snippets popup thing~~
+~~- css for the settings menu for ace ~~

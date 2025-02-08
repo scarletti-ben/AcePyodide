@@ -4,7 +4,7 @@
 <head>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>AcePyodide</title>
 
   <!-- ! Imports -->
@@ -42,7 +42,7 @@
   </div>
 
   <!-- ! Toolbar HTML -->
-  <div id="toolbar-container">
+  <div id="toolbar-container" class="hidden">
 
     <div id="toolbar-bottom">
 
@@ -63,12 +63,6 @@
         </span>
         <span class="icon" id="clear-terminal" title="Clear Terminal">
           <span class="material-symbols-outlined">cancel_presentation</span>
-        </span>
-        <span class="icon" id="file-next" title="Next Snippet">
-          <span class="material-symbols-outlined">chevron_right</span>
-        </span>
-        <span class="icon" id="file-previous" title="Previous Snippet">
-          <span class="material-symbols-outlined">chevron_left</span>
         </span>
       </div>
 
@@ -118,9 +112,31 @@
       </div>
 
       <div class="toolbar-row">
+        <span class="icon" id="editor-undo" title="Undo">
+          <span class="material-symbols-outlined">undo</span>
+        </span>
+        <span class="icon" id="editor-redo" title="Redo">
+          <span class="material-symbols-outlined">redo</span>
+        </span>
+        <span class="icon" id="editor-copy" title="Copy">
+          <span class="material-symbols-outlined">content_copy</span>
+        </span>
+        <span class="icon" id="editor-paste" title="Paste">
+          <span class="material-symbols-outlined">content_paste</span>
+        </span>
+      </div>
+
+
+      <div class="toolbar-row">
         <span class="icon" id="editor-settings" title="Editor Settings">
           <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
         </span>
+        <span class="icon" id="switch-user" title="Switch User">
+          <span class="material-symbols-outlined">manage_accounts</span>
+        </span>
+        <!-- <span class="icon" id="reset-user" title="Reset User">
+          <span class="material-symbols-outlined">delete_history</span>
+        </span> -->
       </div>
 
     </div>

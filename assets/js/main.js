@@ -200,15 +200,20 @@ document.getElementById("run-code").addEventListener("click", evaluateEditorAsyn
 //     terminal.textContent += "updated external snippets\n";
 // });
 
-document.getElementById("file-next").addEventListener("click", () => {
-    loadSnippet(editor);
-    addLine("Loaded most recent snippet from cloud");
-});
+// document.getElementById("file-next").addEventListener("click", () => {
+//     loadSnippet(editor);
+//     addLine("Loaded most recent snippet from cloud");
+// });
 
-document.getElementById("file-previous").addEventListener("click", () => {
+// document.getElementById("file-previous").addEventListener("click", () => {
+//     loadSnippet(editor);
+//     addLine("Loaded most recent snippet from cloud");
+// });
+
+function loadMostRecent() {
     loadSnippet(editor);
     addLine("Loaded most recent snippet from cloud");
-});
+}
 
 document.getElementById("editor-settings").addEventListener("click", () => {
     editor.execCommand("showSettingsMenu");
@@ -227,7 +232,7 @@ document.getElementById("cloud-delete").addEventListener("click", () => {
 
 document.getElementById("local-download").addEventListener("click", () => {
     addLine("Saving to local file");
-    let filename = "test.py";
+    let filename = getDateString() + ".py";
     saveToFile(filename, editor);
 });
 
@@ -264,7 +269,7 @@ document.addEventListener('keydown', function (event) {
     }
     else if (event.code === 'Numpad4') {
         event.preventDefault();
-        document.getElementById("file-next").click();
+        loadMostRecent();
     }
 });
 
@@ -301,6 +306,46 @@ document.getElementById("close-filesystem").addEventListener("click", () => {
     let container = document.querySelector("#file-window-container");
     container.classList.add("hidden");
 });
+
+document.getElementById("editor-undo").addEventListener("click", () => {
+    editor.undo();
+});
+
+document.getElementById("editor-redo").addEventListener("click", () => {
+    editor.redo();
+});
+
+document.getElementById("editor-copy").addEventListener("click", () => {
+    const content = editor.getValue();
+    navigator.clipboard.writeText(content);
+});
+
+document.getElementById("editor-paste").addEventListener("click", async () => {
+    const content = await navigator.clipboard.readText();
+    editor.insert(content);
+});
+
+
+
+function clickListen(selector, func) {
+    let element = document.querySelector(selector);
+    element.addEventListener("click", func);
+}
+
+async function switchUser() {
+    let newID = prompt("Enter ID number, leave empty to generate new ID:");
+    let newData = await readFile(newID);
+    let newSnippets = newData?.micropip?.snippets;
+    if (newSnippets == null) {
+        alert(`User ID: ${newID} is not valid, it may have expired`)
+    }
+    else {
+        setUserID(newID);
+        addLine(`User ID Saved: ${newID}`);
+        await storageInit(newID);
+    };
+}
+clickListen("#switch-user", switchUser);
 
 function MADNESS() {
 
@@ -364,7 +409,7 @@ function MADNESS() {
                 }
                 else if (identifier === "edit") {
                     icon.addEventListener("click", () => {
-                        editor.setValue(value);
+                        editor.setValue(value.trim());
                         editor.clearSelection();
                         let container = document.querySelector("#file-window-container");
                         container.classList.add("hidden");
@@ -380,7 +425,40 @@ function MADNESS() {
                 row.appendChild(icon);
             }
 
-            header.textContent = key + ".py";
+            let editable = document.createElement("span");
+            editable.innerText = key;
+            editable.contentEditable = "true";
+            let extension = document.createElement("span");
+            extension.innerText = ".py";
+            header.appendChild(editable);
+            header.appendChild(extension);
+
+            editable.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    let newKey = editable.textContent;
+                    if (snippets.hasOwnProperty('key')) {
+                        alert("Name already exists");
+                        editable.textContent = key;
+                    }
+                    else if (newKey.length === 0) {
+                        alert("Name cannot be empty");
+                        editable.textContent = key;
+                    }
+                    else {
+
+                        let keys = Object.keys(snippets);
+                        let index = keys.indexOf(key);
+                        delete snippets[key];
+                        keys.splice(index, 0, newKey);
+                        snippets[newKey] = value;
+                        updateStorage(userID, userData);
+                        addLine(`${key}.py renamed to ${newKey}.py`)
+                        addLine(`updated cloud storage`)
+                    }
+                }
+            });
+
             contents.textContent = value;
             container.appendChild(header);
             container.appendChild(contents);
@@ -438,9 +516,40 @@ async function main() {
         addLine(`User ID Saved: ${userID}`);
     }
 
-    await storageInit(userID);
+    async function storageInitialise() {
+        let storageSuccess = await storageInit(userID);
+        if (storageSuccess == null) {
+            alert(`User ID: ${userID} is not valid, it may have expired`)
+            userID = prompt("Enter ID number, leave empty to generate new ID:");
 
-    document.getElementById("file-next").click();
+            if (!userID) {
+                let dateString = getDateString();
+                let data = {
+                    "micropip": {
+                        "snippets": {
+                            [dateString]: defaultText
+                        }
+                    }
+                }
+                userID = await createStorage(data);
+                addLine(`New User Created: ${userID}`);
+            }
+            else {
+                addLine(`Existing User Login: ${userID}`);
+
+            }
+
+            setUserID(userID);
+            addLine(`User ID Saved: ${userID}`);
+            await storageInit(userID);
+
+        }
+    }
+
+    await storageInitialise();
+
+    // document.getElementById("file-next").click();
+    loadMostRecent();
 
     // editor.setValue(text.trim());
     editor.clearSelection();
@@ -451,6 +560,6 @@ async function main() {
 // Execution
 // =======================================================
 
-main();
-
-// MADNESS();
+main().then(() => {
+    document.querySelector("#toolbar-container").classList.toggle("hidden");
+});

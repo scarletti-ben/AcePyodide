@@ -282,11 +282,191 @@ html, body {
   align-items: flex-start;
 }
 
+.ace_tooltip {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  padding: 5px 10px;
+  line-height: 1.2;
+  font-size: 10px;
+  /* max-width: 300px; */
+  /* white-space: normal; */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+
+
+#ace_settingsmenu, #kbshortcutmenu {
+  background: #1e1e1e !important;
+  color: #ccc !important;
+  font-size: 10px !important;
+  border: 1px solid #444;
+  padding: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#ace_settingsmenu .ace_setting, #kbshortcutmenu .ace_setting {
+  padding: 4px 0;
+  color: #bbb !important;
+}
+
+#ace_settingsmenu .ace_setting:hover, #kbshortcutmenu .ace_setting:hover {
+  background: #333 !important;
+}
+
+#ace_settingsmenu .ace_setting .ace_setting_label, #kbshortcutmenu .ace_setting .ace_setting_label {
+  color: #ccc !important;
+}
+
+
+
+
+
+/* Dark mode for input fields */
+input, textarea, select {
+  background-color: #333 !important;
+  color: #ccc !important;
+  border: 1px solid #444 !important;
+  padding: 2px;
+  font-size: 10px;
+  border-radius: 4px;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #555 !important;
+  outline: none;
+  background-color: #444 !important;
+}
+
+/* Dark mode for checkboxes */
+input[type="checkbox"] {
+  background-color: #333 !important;
+  border: 1px solid #444 !important;
+  color: #ccc !important;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #555 !important;
+  border-color: #666 !important;
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+  border-color: #555 !important;
+}
+
+/* Dark mode for radio buttons */
+input[type="radio"] {
+  background-color: #333 !important;
+  border: 1px solid #444 !important;
+  color: #ccc !important;
+}
+
+input[type="radio"]:checked {
+  background-color: #555 !important;
+  border-color: #666 !important;
+}
+
+input[type="radio"]:focus {
+  outline: none;
+  border-color: #555 !important;
+}
+
+/* Dark mode for buttons */
+button {
+  background-color: #333 !important;
+  color: #ccc !important;
+  border: 1px solid #444 !important;
+  padding: 4px 6px;
+  font-size: 10px;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #444 !important;
+  border-color: #555 !important;
+}
+
+button:focus {
+  outline: none;
+  border-color: #555 !important;
+}
+
+.ace_settings_menu .ace_setting {
+  padding: 4px 0;
+  color: #bbb !important;
+}
+
+.ace_settings_menu .ace_setting:hover {
+  background: #333 !important;
+}
+
+.ace_settings_menu .ace_setting .ace_setting_label {
+  color: #ccc !important;
+}
+
+
+
+
+input[type="checkbox"] {
+  background-color: #333 !important;
+  accent-color: #333;
+  border: 1px solid #444 !important;
+  color: #ccc !important;
+  opacity: 0.1; 
+}
+
+input[type="checkbox"]:checked {
+  background-color: #555 !important;
+  border-color: #666 !important;
+  opacity: 0.8; 
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+  border-color: #555 !important;
+}
+
+
+
+
 .close-container {
-  all: unset;
   top: 0;
   right: -48px;
   position: absolute;
   box-sizing: border-box;
   background-color: #2C2C2C;
+}
+
+
+
+
+
+
+
+
+
+@media (orientation: portrait) {
+  #file-window-container {
+    height: 95%;
+    width: 95%;
+    max-height: 95%;
+  }
+
+  #file-window {
+    padding: 18px 12px;
+    gap: 24px;
+    border-radius: 24px 0px 0px 24px;
+  }
+
+  .close-container {
+    top: 0;
+    right: 0px;
+    position: absolute;
+    box-sizing: border-box;
+    background-color: rgba(30, 30, 30, 0.5);
+    border-radius: 50%;
+  }
+
+  
 }

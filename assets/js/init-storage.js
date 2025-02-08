@@ -75,7 +75,7 @@ function deleteLocalSnippet() {
 
 // Save editor contents to a file with a given filename
 function saveToFile(filename, editor) {
-    let content = editor.getValue();
+    let content = editor.getValue().trim();
     const blob = new Blob([content], { type: 'text/plain' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
@@ -112,5 +112,6 @@ function openRaw(userID) {
 // Initialise snippet storage
 async function storageInit(userID) {
     userData = await readFile(userID);
-    snippets = userData.micropip.snippets;
+    snippets = userData?.micropip?.snippets;
+    return snippets;
 }
