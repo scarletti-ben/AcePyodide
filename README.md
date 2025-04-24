@@ -79,6 +79,7 @@ This is a combination of a few of my projects, involving `pyodide`, `ace editor`
 ### Open
 - Animation for chevron flip
 
+# Project Metadata
 ```yaml
 ---
 metadata:
