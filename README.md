@@ -1,3 +1,13 @@
+---
+metadata:
+  author: "Ben Scarletti"
+  date: "2025-04-24"
+  description: "AcePyodide is a browser-based Python editor using Ace and Pyodide, with serverless cloud storage using JSONBlob"
+  tags: [
+    "dev", "webdev", "programming", "coding", "python", "javascript", "html", "css", "wasm", "pyodide", "ace", "ace editor", "jsonblob", "api", "static site", "github pages", "cloud storage", "toolbar", "google material icons", "requests", "http methods", "post request", "get request", "fetch"
+  ]
+---
+
 # AcePyodide
 
 ## Overview
